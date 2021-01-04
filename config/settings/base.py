@@ -2,6 +2,7 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
+from pathlib import PurePath
 
 import environ
 
@@ -55,6 +56,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # APPS
 # ------------------------------------------------------------------------------
+PREDJANGO_APPS = [
+    'baton',
+]
+
 DJANGO_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -75,10 +80,13 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "fortyk_ffg_companion.users.apps.UsersConfig",
+    "fortyk_ffg_companion.black_crusade.apps.BlackCrusadeConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = PREDJANGO_APPS + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS.append('baton.autodiscover')
+
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -269,3 +277,18 @@ SOCIALACCOUNT_ADAPTER = "fortyk_ffg_companion.users.adapters.SocialAccountAdapte
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+BATON = {
+    'SITE_HEADER': '40K Helper',
+    'SITE_TITLE': '40k ffg',
+    'INDEX_TITLE': 'Site administration',
+    'SUPPORT_HREF': 'mailto://notna888@gmail.com',
+    'COPYRIGHT': 'copyright © 2021', # noqa
+    'POWERED_BY': '<a href="https://www.otto.to.it">Otto srl</a>',
+    'MENU_TITLE': 'Menu',
+    'GRAVATAR_DEFAULT_IMG': 'retro',
+    'ANALYTICS': {
+        'CREDENTIALS': PurePath(ROOT_DIR, 'ga_credentials.json'),
+        'VIEW_ID': '',
+    }
+}
